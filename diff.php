@@ -52,11 +52,22 @@ echo '<p>Comparison between <span style="color: red;"> target: ' . $target_site 
 
 foreach($array1 as $key=>$val){
     if(array_key_exists($key,$array2)){
-        if($array2[$key] !== $array1[$key]){
-            echo('<p> <span style="color: black;">[*]'.$key.'</span></p>');
-            echo('<p> <span style="color: red;">   ---- '.$array2[$key].'</span></p>');
-            echo('<p> <span style="color: blue;">   ++++ '.$array1[$key].'</span></p>');
+        $val1 = preg_replace("/(\s|\&nbsp\;|　|\xc2\xa0)/", " ", ($array1[$key]));
+        $val2 = preg_replace("/(\s|\&nbsp\;|　|\xc2\xa0)/", " ", ($array2[$key]));
+        $val1 = str_replace(", ","<br>\t----&nbsp;",$val1);
+        $val2 = str_replace(", ","<br>\t++++&nbsp;",$val2);
+        if(trim($val2) !== trim($val1)){
+            echo("<p> <span style='color: black;'>[*]".$key."</span></p>");
+            echo("<p> <span style='color: red;'>\t---- ".$val1."</span></p>");
+            echo("<p> <span style='color: blue;'>\t++++ ".$val2."</span></p>");
         }
+    }
+    else{
+        if($_GET['all']==1){
+            echo("<p> <span style='color: blueviolet;'>[*]".$key."</span></p>");
+            echo("<p> <span style='color: blueviolet;'>\t---- ".$array1[$key]."</span></p>");
+        }
+        
     }
 }
 

@@ -25,7 +25,7 @@ function curl_website($url, $username = NULL, $password = NULL)
 function phpinfo_to_array($data)
 {
     $ret = $match = array();
-    if (preg_match_all('/<tr><td class="e">(.*?)<\/td><td class="v">(.*?)<\/td>(:?<td class="v">(.*?)<\/td>)?<\/tr>/', $data, $match, PREG_SET_ORDER)) {
+    if (preg_match_all('/<tr><td class="e">(.*?)<\/td><td class="v">([\s\S]*?)<\/td>(:?<td class="v">(.*?)<\/td>)?<\/tr>/', $data, $match, PREG_SET_ORDER)) {
         foreach ($match as $key => $val) {
             $ret[$val[1]] = $val[2];
         }
@@ -34,7 +34,7 @@ function phpinfo_to_array($data)
 }
 
 // compare two different phpinfos
-$target_site = 'http://150.158.58.29/tt.html';
+$target_site = 'http://localhost:10021/1.html';
 $example_site = 'http://150.158.58.29/index.php';
 
 // if required, use curl_website($target_site,username,password);
@@ -43,7 +43,7 @@ $data2 = curl_website($example_site);
 
 $array1 = phpinfo_to_array($data1);
 $array2 = phpinfo_to_array($data2);
-
+// print_r($array1);
 echo '<pre>';
 
 echo '<h1>Compare Two phpinfo() Files</h1>';
